@@ -5,6 +5,8 @@ import numpy
 import matplotlib.pyplot as plt
 import pickle
 
+from sklearn.linear_model import LinearRegression
+
 from outlier_cleaner import outlierCleaner
 
 
@@ -26,9 +28,10 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 ### fill in a regression here!  Name the regression object reg so that
 ### the plotting code below works, and you can see what your regression looks like
 
-
-
-
+reg = LinearRegression()
+reg.fit(ages_train, net_worths_train)
+print 'slope = %.4f, intercept = %.4f' % (reg.coef_, reg.intercept_)
+print 'test data score = %.4f' % reg.score(ages_test, net_worths_test)
 
 
 
@@ -68,6 +71,8 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
+        print 'slope = %.4f, intercept = %.4f' % (reg.coef_, reg.intercept_)
+        print 'test data score = %.4f' % reg.score(ages_test, net_worths_test)
         plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
